@@ -15,10 +15,10 @@ def image_preprocessing(image):
     new_img = image[int(480/3):, :, :]
 
     # transform the color image to grayscale
-    new_img = cv2.cvtColor(new_img[:, :, :], cv2.COLOR_RGB2GRAY)
+    # new_img = cv2.cvtColor(new_img[:, :, :], cv2.COLOR_RGB2GRAY)
 
     # resize the image from 320x640 to 48x96
-    new_img = cv2.resize( new_img, (image_final_width, image_final_height))  # this returns image 48x96 and not 96x48
+    new_img = cv2.resize( new_img, (image_final_width, image_final_height) ) # this returns image 48x96 and not 96x48
 
     # normalize images to range [0, 1] (divide each pixel by 255)
     # first transform the array of int to array of float, else the division with 255 will return an array of 0s
@@ -41,13 +41,13 @@ def synchronize_data(df_imgs, df_cmds, bag_ID):
     for cmd_index, cmd_time in enumerate(df_cmds['vel_timestamp']):
 
         # we keep only the data for which the duckiebot is moving (we do not want the duckiebot to learn to remain at rest)
-        if (df_cmds['vel_omega'][cmd_index] != 0) & (df_cmds['vel_v'][cmd_index] != 0):
+        if ( df_cmds['vel_left'][cmd_index] != 0) & ( df_cmds['vel_right'][cmd_index] != 0):
 
-            # find index of image with the closest timestamp to omega velocity's timestamp
-            img_index = (np.abs(df_imgs['img_timestamp'].values - cmd_time)).argmin()
+            # find index of image with the closest timestamp to wheels' velocities timestamp
+            img_index = ( np.abs( df_imgs['img_timestamp'].values - cmd_time ) ).argmin()
 
             # The image precedes the omega velocity, thus image's timestamp must be smaller
-            if ((df_imgs['img_timestamp'][img_index] - cmd_time) > 0) & (img_index - 1 < 0):
+            if ( ( df_imgs['img_timestamp'][img_index] - cmd_time ) > 0 ) & (img_index - 1 < 0):
 
                 # if the image appears after the velocity and there is no previous image, then
                 # there is no safe synchronization and the data should not be included
@@ -64,8 +64,8 @@ def synchronize_data(df_imgs, df_cmds, bag_ID):
                 temp_data = np.array( [[
                     df_imgs['img_timestamp'][img_index],
                     df_cmds["vel_timestamp"][cmd_index],
-                    df_cmds['vel_v'][cmd_index],
-                    df_cmds['vel_omega'][cmd_index],
+                    df_cmds['vel_left'][cmd_index],
+                    df_cmds['vel_right'][cmd_index],
                     bag_ID
                 ]] )
 

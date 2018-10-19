@@ -18,8 +18,9 @@ def load_data(file_path):
     df_img = pd.read_hdf(file_path, key='images', encoding='utf-8')
 
     # extract omega velocities from dataset
-    velocities = df_data['vel_omega'].values
-    velocities = np.reshape(velocities, (-1, 1))
+    # velocities = df_data['vel_omega'].values
+    velocities = df_data[['vel_left', 'vel_right']].values
+    velocities = np.reshape(velocities, (-1, 2))
 
     # extract images from dataset
     images = df_img['img'][0]
@@ -43,6 +44,7 @@ def form_model_name(batch_size, lr, optimizer, epochs):
     :return: name of model as a string
     '''
 
+    # return "batch={},lr={},optimizer={},epochs={}_grayscale".format(batch_size, lr, optimizer, epochs)
     return "batch={},lr={},optimizer={},epochs={}".format(batch_size, lr, optimizer, epochs)
 
 
@@ -111,7 +113,7 @@ class CNN_training:
             hl_fc_1 = tf.layers.dense(inputs=conv_flat, units=64, activation=tf.nn.relu, name="fc_layer_1")
 
             # add 2nd fully connected layers to predict the driving commands
-            hl_fc_2 = tf.layers.dense(inputs=hl_fc_1, units=1, name="fc_layer_2")
+            hl_fc_2 = tf.layers.dense(inputs=hl_fc_1, units=2, name="fc_layer_2")
 
             return hl_fc_2
 
@@ -169,7 +171,7 @@ class CNN_training:
 
         # define placeholder for the true omega velocities
         # [None: tensor may hold arbitrary num of velocities, number of omega predictions for each image]
-        self.vel_true = tf.placeholder(tf.float16, shape=[None, 1], name="vel_true")
+        self.vel_true = tf.placeholder(tf.float16, shape=[None, 2], name="vel_true")
         self.vel_pred = self.model(self.x)
 
         self.loss = self.loss_function()

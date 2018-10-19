@@ -48,7 +48,7 @@ def solve(gym_environment, cis):
     x = graph.get_tensor_by_name('prefix/x:0')
     # x = tf.placeholder(tf.float16, shape=[None, 48 * 96], name='x')
     # y = tf.placeholder(tf.float16, shape=[None, 2], name='y')
-    y = graph.get_tensor_by_name('prefix/fc_layer_2/BiasAdd:0')
+    y = graph.get_tensor_by_name('prefix/ConvNet/fc_layer_2/BiasAdd:0')
     # We launch a Session
     with tf.Session(graph=graph) as sess:
 
@@ -59,20 +59,21 @@ def solve(gym_environment, cis):
             # Additionally img is converted to greyscale
             observation = fun_img_preprocessing(observation, 48, 96)
             # this outputs omega, the desired angular velocity
-            omega = sess.run(y, feed_dict={
+            action = sess.run(y, feed_dict={
                 x: observation
             })
-
+            action = [action[0,1], action[0, 0]]
             # Inverse kinematics: Which left/right wheel velocities
             # correspond to the constant forward velocity and omega/angular velocity
-
-            # adjusting k by gain and trim
-            # k_r_inv = (self.gain + self.trim) / k_r
-            # k_l_inv = (self.gain - self.trim) / k_l
-            omega_r = (ROBOT_SPEED + 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
-            omega_l = (ROBOT_SPEED - 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
-            action = [omega_l, omega_r]
+            #
+            # # adjusting k by gain and trim
+            # # k_r_inv = (self.gain + self.trim) / k_r
+            # # k_l_inv = (self.gain - self.trim) / k_l
+            # omega_r = (ROBOT_SPEED + 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
+            # omega_l = (ROBOT_SPEED - 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
+            # action = [omega_l, omega_r]
             # TODO: remove printing
+            # action = [ROBOT_SPEED, omega[0,0]]
             print(action)
 
             # we tell the environment to perform this action and we get some info back in OpenAI Gym style

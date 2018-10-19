@@ -46,8 +46,10 @@ def main():
                 # the duckiebot name can change from one bag file to the other, so define
                 # the topics WITHOUT the duckiebot name in the beginning
                 "/camera_node/image/compressed",
-                "/lane_controller_node/car_cmd"
+                # "/lane_controller_node/car_cmd"
+                "/wheels_driver_node/wheels_cmd"
                 ]
+
 
     # define the bags_directory in order to extract the data
     bags_directory = os.path.join(os.getcwd(), "bag_files")
@@ -111,7 +113,8 @@ def main():
 
         # extract the images and car_cmds messages
         ext_images = msgs["/" + duckiebot_name + "/camera_node/image/compressed"].messages
-        ext_car_cmds = msgs["/" + duckiebot_name + "/lane_controller_node/car_cmd"].messages
+        # ext_car_cmds = msgs["/" + duckiebot_name + "/lane_controller_node/car_cmd"].messages
+        ext_car_cmds = msgs["/" + duckiebot_name + "/wheels_driver_node/wheels_cmd"].messages
 
         # create dataframe with the images and the images' timestamps
         for num, img in enumerate(ext_images):
@@ -147,8 +150,8 @@ def main():
 
             temp_df = pd.DataFrame({
                 'vel_timestamp': [vel_timestamp],
-                'vel_omega': [cmd_msg.omega],
-                'vel_v': [cmd_msg.v]
+                'vel_left': [cmd_msg.vel_left],
+                'vel_right': [cmd_msg.vel_right]
             })
 
             if num == 0:
@@ -160,7 +163,6 @@ def main():
         print("Starting synchronization of data for {} file.".format(file))
 
         temp_synch_data, temp_synch_imgs = synchronize_data(df_imgs, df_cmds, bag_ID)
-        # print temp_synch_data.shape, temp_synch_imgs.shape
 
         if first_time:
             synch_data = copy(temp_synch_data)
@@ -182,8 +184,8 @@ def main():
     df_data_train = pd.DataFrame({
         'img_timestamp': synch_data[:train_size, 0],
         'vel_timestamp': synch_data[:train_size, 1],
-        'vel_v': synch_data[:train_size, 2],
-        'vel_omega': synch_data[:train_size, 3],
+        'vel_left': synch_data[:train_size, 2],
+        'vel_right': synch_data[:train_size, 3],
         'bag_ID': synch_data[:train_size, 4],
     })
 
@@ -196,8 +198,8 @@ def main():
     df_data_test = pd.DataFrame({
         'img_timestamp': synch_data[train_size:, 0],
         'vel_timestamp': synch_data[train_size:, 1],
-        'vel_v': synch_data[train_size:, 2],
-        'vel_omega': synch_data[train_size:, 3],
+        'vel_left': synch_data[train_size:, 2],
+        'vel_right': synch_data[train_size:, 3],
         'bag_ID': synch_data[train_size:, 4],
     })
 
