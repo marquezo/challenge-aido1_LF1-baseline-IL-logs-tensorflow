@@ -3,8 +3,6 @@
 import os
 from tensorflow.python.tools import freeze_graph
 
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"]="3"
 
 def main():
 
