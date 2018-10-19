@@ -12,10 +12,10 @@ def image_preprocessing(image):
     image_final_width = 96
 
     # crop the upper third of the image -> new image will be 320x640
-    new_img = image[int(480/3):, :, :]
+    new_img = image[int(image.shape[0]/3):, :, :]
 
     # transform the color image to grayscale
-    # new_img = cv2.cvtColor(new_img[:, :, :], cv2.COLOR_RGB2GRAY)
+    new_img = cv2.cvtColor(new_img[:, :, :], cv2.COLOR_RGB2GRAY)
 
     # resize the image from 320x640 to 48x96
     new_img = cv2.resize( new_img, (image_final_width, image_final_height) ) # this returns image 48x96 and not 96x48
