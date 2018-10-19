@@ -6,7 +6,7 @@ import os
 def download_bag_files(urls):
 
     # check if bag_files directory exists, else create a new one
-    directory = os.path.join(os.getcwd(), "bag_files")
+    directory = os.path.join(os.getcwd(), "data", "bag_files")
     if not os.path.exists(directory):
         os.makedirs(directory)
 

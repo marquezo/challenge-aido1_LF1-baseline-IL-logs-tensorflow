@@ -26,7 +26,7 @@ learn:
 
 freeze:
 				. $(VIRTUALENV)/bin/activate; \
-                python src/freeze_graph.py;
+        python ../src/freeze_graph.py;
 
 build-real-local-laptop:
 				

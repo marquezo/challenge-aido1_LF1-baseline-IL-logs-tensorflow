@@ -12,13 +12,13 @@ def main():
     model_name = 'learned_models'
 
     # define the path to the graph from training
-    input_graph = os.path.join(os.getcwd(), 'tensorflow_logs', model_name, 'graph', 'graph.pb')
+    input_graph = os.path.join(os.getcwd(), model_name, 'tensorflow_logs', 'graph', 'graph.pb')
 
     # define the path in which to save the frozen graph
-    output_graph = os.path.join(os.getcwd(), '../submission', model_name, 'frozen_graph.pb')
+    output_graph = os.path.join(os.getcwd(), model_name, 'frozen_graph.pb')
 
     # the frozen_graph directory must exist in order to freeze the model
-    directory = os.path.join(os.getcwd(), 'tensorflow_logs', model_name, 'frozen_graph')
+    directory = os.path.join(os.getcwd(), model_name, 'frozen_graph')
     if not os.path.exists(directory):
         os.makedirs(directory)
 
