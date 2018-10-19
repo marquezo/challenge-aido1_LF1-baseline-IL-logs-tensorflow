@@ -17,7 +17,7 @@ setup(
         'tensorboard>=1.8.0',
         'tensorflow>=1.8.0',
         'requests',
-        'cv2',
+        'opencv-python==3.2.0.8',
     ],
     entry_points={
         'console_scripts': [
