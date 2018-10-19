@@ -3,17 +3,19 @@
 import os
 from tensorflow.python.tools import freeze_graph
 
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="3"
 
 def main():
 
     # Define the name of your model
-    model_name = 'batch=100,lr=0.0001,optimizer=GDS,epochs=1000'
+    model_name = 'learned_models'
 
     # define the path to the graph from training
     input_graph = os.path.join(os.getcwd(), 'tensorflow_logs', model_name, 'graph', 'graph.pb')
 
     # define the path in which to save the frozen graph
-    output_graph = os.path.join(os.getcwd(), 'tensorflow_logs', model_name, 'frozen_graph', 'frozen_graph.pb')
+    output_graph = os.path.join(os.getcwd(), '../submission', model_name, 'frozen_graph.pb')
 
     # the frozen_graph directory must exist in order to freeze the model
     directory = os.path.join(os.getcwd(), 'tensorflow_logs', model_name, 'frozen_graph')

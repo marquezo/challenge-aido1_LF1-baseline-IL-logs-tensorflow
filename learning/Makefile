@@ -1,9 +1,5 @@
 VIRTUALENV = LF_IL_virtualenv
-AG_VERSION = 2018.9.29
-
-USERNAME = megaduck
-DUCKIEBOT = megabot08
-PASSWORD = megacity
+AG_VERSION = 2018-10-19
 
 # Makefile to structure work on the AI-DO baselines.
 #
@@ -28,12 +24,9 @@ learn:
 				. $(VIRTUALENV)/bin/activate; \
 				python ../src/cnn_training_tensorflow.py;
 
-build-image:
+freeze:
 				. $(VIRTUALENV)/bin/activate; \
-                python src/freeze_graph.py; \
-                docker build --tag duckietown/il-baseline-tensorflow:$(AG_VERSION) .;
-                #TODO: make sure frozen graph of learned agent is saved in submission
-
+                python src/freeze_graph.py;
 
 build-real-local-laptop:
 				

@@ -15,7 +15,7 @@ setup(
         'pandas>=0.23.0',
         'tables>=3.4.3',
         'tensorboard>=1.8.0',
-        'tensorflow>=1.8.0',
+        'tensorflow-gpu>=1.8.0',
         'requests',
         'opencv-python==3.2.0.8',
     ],
