@@ -1,6 +1,9 @@
 # Definition of Submission container
 # We start from tensorflow-gpu image
 FROM tensorflow/tensorflow:latest-gpu
+#FROM duckietown/rpi-duckiebot-base:master18
+#FROM ros:kinetic-ros-base-xenial
+
 
 # from https://github.com/tensorflow/tensorflow/issues/10776
 # this may not be needed if you use pytorch image
@@ -34,14 +37,18 @@ COPY src /workspace
 # we make the workspace our working directory
 WORKDIR /workspace
 
-RUN mkdir /learned_models
-VOLUME /learned_models
+RUN mkdir /workspace/data
+COPY data /workspace/data
+
+RUN ls /workspace
+RUN ls
+RUN ls /workspace/data
 
 
-# Download logs
-RUN python download_logs.py
-# Extract data into useable format
-RUN python extract_data.py
+## Download logs
+#RUN python download_logs.py
+## Extract data into useable format
+#RUN python extract_data.py
 # Train CNN model for lane following
 RUN python cnn_training_tensorflow.py
 # Freeze model graph

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import cv2
 import numpy as np
 import pandas as pd
 import os
 import collections
 import rosbag
 import cv_bridge
+import cv2
 from copy import copy
 from extract_data_functions import image_preprocessing, synchronize_data
 
@@ -52,7 +52,7 @@ def main():
 
 
     # define the bags_directory in order to extract the data
-    bags_directory = os.path.join(os.getcwd(), "bag_files")
+    bags_directory = os.path.join(os.getcwd(), "data", "bag_files")
 
     # define data_directory
     data_directory = 'data'
@@ -69,7 +69,7 @@ def main():
     if not os.path.exists(train_dir):
         os.mkdir(train_dir)
 
-    cvbridge = cv_bridge.CvBridge()
+    cvbridge_object = cv_bridge.CvBridge()
 
     # create a dataframe to store the data for all bag files
     # df_all = pd.DataFrame()
@@ -120,7 +120,11 @@ def main():
         for num, img in enumerate(ext_images):
 
             # get the rgb image
-            img = cvbridge.compressed_imgmsg_to_cv2(img.message)
+            #### direct conversion to CV2 ####
+            # np_arr = np.fromstring(img.data, np.uint8)
+            # img = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+            # print("img", img, img.shape)
+            img = cvbridge_object.compressed_imgmsg_to_cv2(img.message)
             img = image_preprocessing(img)  # -> each image is of dimensions (1, 48x96=4608)
 
             # hack to get the timestamp of each image in <float 'secs.nsecs'> format instead of <int 'rospy.rostime.Time'>
