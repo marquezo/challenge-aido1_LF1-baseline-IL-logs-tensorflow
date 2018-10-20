@@ -62,7 +62,7 @@ def solve(gym_environment, cis):
             action = sess.run(y, feed_dict={
                 x: observation
             })
-            action = [action[0,1], action[0, 0]]
+            action = [action[0, 1], action[0, 0]]
             # Inverse kinematics: Which left/right wheel velocities
             # correspond to the constant forward velocity and omega/angular velocity
             #
