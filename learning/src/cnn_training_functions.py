@@ -156,7 +156,7 @@ class CNN_training:
     def training(self, model_name, train_velocities, train_images, test_velocities, test_images):
 
         # define paths to save the TensorFlow logs
-        model_path = os.path.join(os.getcwd(), 'tensorflow_logs', model_name)
+        model_path = os.path.join(os.getcwd(), model_name, 'tensorflow_logs')
         logs_train_path = os.path.join(model_path, 'train')
         logs_test_path = os.path.join(model_path, 'test')
         graph_path = os.path.join(model_path, 'graph')
