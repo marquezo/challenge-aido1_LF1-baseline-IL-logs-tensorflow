@@ -8,7 +8,6 @@ setup(
         'h5py',
         'pyyaml',
         'rospkg',
-        'sklearn',
         'numpy',
         'pandas>=0.23.0',
         'tables>=3.4.3',
