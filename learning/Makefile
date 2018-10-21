@@ -1,4 +1,4 @@
-VIRTUALENV = LF_IL_virtualenv
+VIRTUALENV = LF_IL_virtualenv_learning
 AG_VERSION = 2018-10-19
 
 # Makefile to structure work on the AI-DO baselines.
@@ -15,9 +15,9 @@ copy_for_submission:
 
 # ---------- REGULAR --------------
 # This assumes that you have GPU drivers installed already.
+
 # If only CPU is available for computation on your machine,
 # change the line "pip install tensorflow-gpu" to "tensorflow" (without the GPU option)
-
 install-dependencies:
 				virtualenv $(VIRTUALENV); \
 				. $(VIRTUALENV)/bin/activate; \
@@ -28,4 +28,7 @@ learn-regular:
 				. $(VIRTUALENV)/bin/activate; \
 				python src/cnn_training_tensorflow.py; \
 				python src/freeze_graph.py;
+
+regular_copy_for_submission:
+				cp learned_models/frozen_graph.pb ../submission/learned_models;
 

@@ -45,4 +45,3 @@ RUN python download_logs.py
 RUN python extract_data.py
 # Remove bagfiles after extracting training data - ! Please adapt if data is still required
 RUN rm -rf data/bag_files
-#VOLUME /workspace/data

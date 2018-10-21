@@ -22,3 +22,9 @@ Note: In particular you will need to set a token and specify your docker usernam
 ## Description
 
 In this baseline template, driving behavior is learned using imitation learning from `rosbag` logs.
+
+Follow the makefile in the individual folders of this repository. 
+
+1. Download and extract data using the Makefile in the `extract_data` folder. 
+2. Learn a model using the Makefile and scripts in the `learning` folder.
+3. Submit the learned model by running `make submit` in the `submission` folder. 

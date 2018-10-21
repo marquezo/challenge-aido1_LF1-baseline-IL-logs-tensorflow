@@ -16,7 +16,13 @@ There are two ways of running the makefile. Using docker and without.
 Without docker you will need to have configured the GPU drivers for learning correctly. 
 
 # Docker 
-## Learning with docker
+## Download and extract data
+
+Type: `make extract_data` 
+
+## Make extracted data accessible for learning step
+
+Type: `make copy_for_learning`
 
 Type: `make learn-docker` 
 
@@ -27,17 +33,15 @@ Type: `make learn-docker`
 Create new virtual environment and install necessary dependencies.
 Note that ROS needs to be installed additionally. 
 
-Type: `install-dependencies`
+Type: `make install-dependencies`
 
-## Train CNN and freeze TensorFlow graph
+## Download and preprocess logs
 
-Train CNN using the extracted images and velocities from the logs.
-This creates an executable network with minimal size. 
+Search, download and extract data from the logs(bag files) which are defined in the download_logs.py script.
 
-Type: `make learn-regular` 
+Type: `make regular_extract_data`
 
-## Copy learned and frozen graph to submission folder
+## Make extracted data accessible for learning step
 
-Type: `make regular_copy_for_submission`
+Type: `make regular_copy_for_learning`
 
-The saved file will be used for the following submission step.
