@@ -35,7 +35,8 @@ def main():
     test_velocities, test_images = load_data(file_path_test)
 
     # construct model name based on the hyper parameters
-    model_name = form_model_name(batch_size, learning_rate, optimizer, epochs)
+    # model_name = form_model_name(batch_size, learning_rate, optimizer, epochs)
+    model_name = 'learned_models'
 
     print('Starting training for {} model.'.format(model_name))
 
