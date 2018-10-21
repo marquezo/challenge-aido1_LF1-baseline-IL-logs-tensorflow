@@ -11,8 +11,7 @@ learn-docker:
 
 # Extract data from docker container and copies it to the learning repository
 copy_for_submission:
-				docker run --runtime=nvidia learn_container python freeze_graph; \
-				docker cp $(shell docker ps -alq):/workspace/learned_models/frozen_graph.pb ../submission; \
+				docker cp $(shell docker ps -alq):/workspace/learned_models/frozen_graph.pb ../submission/learned_models; \
 
 # ---------- REGULAR --------------
 # This assumes that you have GPU drivers installed already.

@@ -13,6 +13,8 @@ The [online description of this challenge is here][online].
 
 For submitting, please follow [the instructions available in the book][book].
  
+Note: In particular you will need to set a token and specify your docker username before submitting.  
+ 
 [book]: http://docs.duckietown.org/DT18/AIDO/out/
 
 [online]: https://challenges.duckietown.org/v3/humans/challenges/aido1_LF1-v3
