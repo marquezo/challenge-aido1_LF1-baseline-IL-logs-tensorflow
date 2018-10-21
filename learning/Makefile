@@ -31,5 +31,6 @@ learn-regular:
 				python src/freeze_graph.py;
 
 regular_copy_for_submission:
+				mkdir ../submission/learned_models; \
 				cp learned_models/frozen_graph.pb ../submission/learned_models;
 

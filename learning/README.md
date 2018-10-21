@@ -26,6 +26,8 @@ Type: `make learn-docker`
 
 Create new virtual environment and install necessary dependencies.
 Note that ROS needs to be installed additionally. 
+Important: Make sure that your CuDNN version matches the tensorflow that will be installed. 
+To edit/adjust, change the version in the `install-dependencies` command in the Makefile. 
 
 Type: `install-dependencies`
 
