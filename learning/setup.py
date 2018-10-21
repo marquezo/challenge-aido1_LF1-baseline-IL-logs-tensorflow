@@ -8,6 +8,7 @@ setup(
         'h5py',
         'numpy',
         'pandas>=0.23.0',
+        'tables>=3.4.3',
     ],
     entry_points={
         'console_scripts': [
