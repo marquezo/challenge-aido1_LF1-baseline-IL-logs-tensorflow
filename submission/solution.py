@@ -28,13 +28,8 @@ def solve(gym_environment, cis):
     observation = env.reset()
     # While there are no signal of completion (simulation done)
     # we run the predictions for a number of episodes, don't worry, we have the control on this part
-
-    # Let's allow the user to pass the filename as an argument
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("--frozen_model_filename", default="results/frozen_model.pb", type=str,
-    #                     help="Frozen model file to import")
     frozen_model_filename = "frozen_graph.pb"
-    # args = parser.parse_args()
+
     # We use our "load_graph" function
     graph = load_graph(frozen_model_filename)
     # We can verify that we can access the list of operations in the graph
@@ -46,8 +41,6 @@ def solve(gym_environment, cis):
 
     # We access the input and output nodes
     x = graph.get_tensor_by_name('prefix/x:0')
-    # x = tf.placeholder(tf.float16, shape=[None, 48 * 96], name='x')
-    # y = tf.placeholder(tf.float16, shape=[None, 2], name='y')
     y = graph.get_tensor_by_name('prefix/ConvNet/fc_layer_2/BiasAdd:0')
     # We launch a Session
     with tf.Session(graph=graph) as sess:
@@ -63,18 +56,6 @@ def solve(gym_environment, cis):
                 x: observation
             })
             action = [action[0, 1], action[0, 0]]
-            # Inverse kinematics: Which left/right wheel velocities
-            # correspond to the constant forward velocity and omega/angular velocity
-            #
-            # # adjusting k by gain and trim
-            # # k_r_inv = (self.gain + self.trim) / k_r
-            # # k_l_inv = (self.gain - self.trim) / k_l
-            # omega_r = (ROBOT_SPEED + 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
-            # omega_l = (ROBOT_SPEED - 0.5 * omega[0, 0] * WHEEL_DIST / 2.0)
-            # action = [omega_l, omega_r]
-            # TODO: remove printing
-            # action = [ROBOT_SPEED, omega[0,0]]
-            print(action)
 
             # we tell the environment to perform this action and we get some info back in OpenAI Gym style
             observation, reward, done, info = env.step(action)
