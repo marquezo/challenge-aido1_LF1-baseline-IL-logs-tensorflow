@@ -1,7 +1,7 @@
 # Definition of Submission container
 # We start from tensorflow-gpu image
-#FROM tensorflow/tensorflow:latest-gpu
-FROM nvidia/cuda:9.0-base
+FROM tensorflow/tensorflow:latest-gpu
+#FROM nvidia/cuda:9.0-cudnn7-runtime
 #FROM duckietown/rpi-duckiebot-base:master18
 #FROM ros:kinetic-ros-base-xenial
 
