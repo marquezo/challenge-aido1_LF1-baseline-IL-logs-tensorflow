@@ -1,6 +1,7 @@
 # Definition of Submission container
 # We start from tensorflow-gpu image
-FROM tensorflow/tensorflow:latest-gpu
+#FROM tensorflow/tensorflow:latest-gpu
+FROM nvidia/cuda:9.0-base
 #FROM duckietown/rpi-duckiebot-base:master18
 #FROM ros:kinetic-ros-base-xenial
 
@@ -39,6 +40,8 @@ WORKDIR /workspace
 
 RUN mkdir /workspace/data
 COPY data /workspace/data
+
+RUN nvidia-smi
 
 RUN ls /workspace
 RUN ls
