@@ -7,12 +7,13 @@ AG_VERSION = 2018-10-19
 # This may run for >10 min and longer if more data is used for learning.
 learn-docker:
 				docker build -t learn_container .; \
-				docker run --runtime=nvidia --name model_extract_container learn_container; \
+				docker run --runtime=nvidia learn_container;
+				docker commit $(shell docker ps -alq) learn_container
 
 # Extract data from docker container and copies it to the learning repository
 copy_for_submission:
 				mkdir ../submission/learned_models; \
-				docker create -it --name dummy_for_copying model_extract_container:latest bash; \
+				docker create -it --name dummy_for_copying learn_container:latest bash; \
 				docker cp dummy_for_copying:/workspace/learned_models/frozen_graph.pb ../submission/learned_models; \
 				docker rm -fv dummy_for_copying;
 
