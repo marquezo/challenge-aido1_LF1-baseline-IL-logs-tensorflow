@@ -6,8 +6,7 @@ AG_VERSION = 2018-10-19
 # ---------- DOCKER --------------
 # This may run for >10 min and longer if more data is used for learning.
 learn-docker:
-				docker build -t learn_container .; \
-				docker run --runtime=nvidia learn_container;
+				docker build -t learn_container .;
 
 # Extract data from docker container and copies it to the learning repository
 copy_for_submission:

@@ -8,7 +8,6 @@ AG_VERSION = 2018-10-19
 
 docker_extract_data:
 				docker build -t extract_container .; \
-				docker run -d extract_container; \
 
 # Extract data from docker container and copies it to the learning repository
 docker_copy_for_learning:

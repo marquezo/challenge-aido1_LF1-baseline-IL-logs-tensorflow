@@ -38,4 +38,4 @@ RUN mkdir /workspace/data
 COPY data /workspace/data
 
 # Train CNN model for lane following && Freeze model graph
-CMD python cnn_training_tensorflow.py && python freeze_graph.py
+RUN python cnn_training_tensorflow.py && python freeze_graph.py
