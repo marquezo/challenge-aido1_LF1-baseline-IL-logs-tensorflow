@@ -12,7 +12,9 @@ learn-docker:
 # Extract data from docker container and copies it to the learning repository
 copy_for_submission:
 				mkdir ../submission/learned_models; \
-				docker cp $(shell docker ps -alq):/workspace/learned_models/frozen_graph.pb ../submission/learned_models;
+				docker create -it --name dummy_for_copying learn_container:latest bash; \
+				docker cp dummy_for_copying:/workspace/learned_models/frozen_graph.pb ../submission/learned_models; \
+				docker rm -fv dummy_for_copying;
 
 # ---------- REGULAR --------------
 # This assumes that you have GPU drivers installed already.

@@ -12,7 +12,9 @@ docker_extract_data:
 
 # Extract data from docker container and copies it to the learning repository
 docker_copy_for_learning:
-				docker cp $(shell docker ps -alq):/workspace/data ../learning; \
+				docker create -it --name dummy_for_copying extract_container:latest bash; \
+				docker cp dummy_for_copying:/workspace/data ../learning; \
+				docker rm -fv dummy_for_copying;
 
 # ---------------- REGULAR -----------------------------------
 # This assumes that rosbag and other ROS dependencies are installed
