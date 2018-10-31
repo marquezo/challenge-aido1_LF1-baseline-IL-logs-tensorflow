@@ -16,6 +16,13 @@ There are two ways of running the makefile. Using docker and without.
 Without docker you will need to have configured the GPU drivers for learning correctly. 
 
 # Docker 
+
+## Installing nvidia-docker-runtime
+
+Type: `make prepare-docker`
+
+This makes sure docker is able to find the nvidia runtime which connects docker to your GPU(s). 
+
 ## Learning with docker
 
 Type: `make learn-docker` 
