@@ -1,12 +1,15 @@
+SHELL := /bin/bash
 VIRTUALENV = LF_IL_virtualenv_learning
 AG_VERSION = 2018-10-19
 
 # Makefile to structure work on the AI-DO baselines.
 
 # ---------- DOCKER --------------
+# THIS WILL ONLY RUN ON LINUX, NOT on Mac, NOT on Windows since nvidia-docker is not supported
 # Nvidia-docker is covered here: https://github.com/NVIDIA/nvidia-docker
 # and https://devblogs.nvidia.com/gpu-containers-runtime/
 prepare-docker:
+				sudo apt-get update; \
 				docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f; \
 				sudo apt-get purge -y nvidia-docker; \
 				curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -; \
