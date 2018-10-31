@@ -7,14 +7,14 @@ AG_VERSION = 2018-10-19
 # Nvidia-docker is covered here: https://github.com/NVIDIA/nvidia-docker
 # and https://devblogs.nvidia.com/gpu-containers-runtime/
 prepare-docker:
-        docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f; \
-        sudo apt-get purge -y nvidia-docker; \
-        curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -; \
-        curl -s -L https://nvidia.github.io/nvidia-docker/$$(. /etc/os-release;echo $$ID$$VERSION_ID)/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list; \
-        sudo apt-get update; \
-        sudo apt-get install -y nvidia-docker2; \
-        sudo pkill -SIGHUP dockerd; \
-        docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi;
+				docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f; \
+				sudo apt-get purge -y nvidia-docker; \
+				curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -; \
+				curl -s -L https://nvidia.github.io/nvidia-docker/$$(. /etc/os-release;echo $$ID$$VERSION_ID)/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list; \
+				sudo apt-get update; \
+				sudo apt-get install -y nvidia-docker2; \
+				sudo pkill -SIGHUP dockerd; \
+				docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi;
 
 # This may run for >10 min and longer (on GPU) if more data is used for learning.
 learn-docker:
