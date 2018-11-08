@@ -181,76 +181,20 @@ def main():
 
     print("Synchronization of all data is finished.\n")
 
-    # define size of train dataset
-    train_size = int(0.9 * synch_data.shape[0])
-
-    # create train dataframe
-    df_data_train = pd.DataFrame({
-        'img_timestamp': synch_data[:train_size, 0],
-        'vel_timestamp': synch_data[:train_size, 1],
-        'vel_left': synch_data[:train_size, 2],
-        'vel_right': synch_data[:train_size, 3],
-        'bag_ID': synch_data[:train_size, 4],
-    })
-
-    # create train dataframe for images in order to save them in the same .h5 file with the rest train data
-    df_img_train = pd.DataFrame({
-        'img': [ synch_imgs[:train_size, :] ]
-    })
-
-    # create test dataframe
-    df_data_test = pd.DataFrame({
-        'img_timestamp': synch_data[train_size:, 0],
-        'vel_timestamp': synch_data[train_size:, 1],
-        'vel_left': synch_data[train_size:, 2],
-        'vel_right': synch_data[train_size:, 3],
-        'bag_ID': synch_data[train_size:, 4],
-    })
-
-    # create test dataframe for images in order to save them in the same .h5 file with the rest test data
-    df_img_test = pd.DataFrame({
-        'img': [ synch_imgs[train_size:, :] ]
-    })
-
-
-    # save train and test datasets to .h5 files
-
-    # ATTENTION 1 !!
-    #  If the datasets become too large, you could face memory errors on laptops.
-    # If you face memory errors while saving the following files, split the data to multiple .h5 files.
-
-    # ATTENTION 2 !!
-    # The .h5 files are tricky and require special attention. In these files you save compressed objects and you can
-    # have more than one objects saved in the same file. If for example we have two different dataframes df1 and df2,
-    # then df1.to_hdf('file.h5', key='df1') and df2.to_hdf('file.h5', key='df2') will result to both df1, df2 to be
-    # saved in 'file.h5' file but with different key for each dataframe. However, if we save the same dataframe to the
-    # same .h5 file with the same key, then in this file you will have the same information twice as different objects
-    # and thus the size of the .h5 file will be double for no reason and without any warning. As a result, here since
-    # the key does not change, we will check if the .h5 file exists before saving the new data, and if it exists we will
-    # first remove the previous file ad then save the new data.
 
     # define the names of the train and test .h5 files
-    train_set_name = os.path.join(train_dir, 'train_set.h5')
-    test_set_name = os.path.join(test_dir, 'test_set.h5')
+    dataset_name = os.path.join(train_dir, 'dataset.npz')
 
     # check if these two files exist in the data directory and if yes remove them before saving the new files
-    if os.path.isfile(train_set_name):
-        os.remove(train_set_name)
+    if os.path.isfile(dataset_name):
+        os.remove(dataset_name)
 
-    if os.path.isfile(test_set_name):
-        os.remove(test_set_name)
+    np.savez_compressed(dataset_name, synch_data=synch_data, synch_imgs=synch_imgs)
 
-    # df_all_train.to_hdf(train_set_name, 'table')
-    df_data_train.to_hdf(train_set_name, key='data')
-    df_img_train.to_hdf(train_set_name, key='images')
+    print("Saved data and images to {}".format(dataset_name))
 
-
-    # df_all_test.to_hdf(test_set_name, 'table')
-    df_data_test.to_hdf(test_set_name, key='data')
-    df_img_test.to_hdf(test_set_name, key='images')
-
-    print("\nThe total {} data were split into {} training and {} test datasets and saved in {} "
-          "directory.".format(synch_data.shape[0], df_data_train.shape[0], df_data_test.shape[0], data_directory))
+    #print("\nThe total {} data were split into {} training and {} test datasets and saved in {} "
+    #      "directory.".format(synch_data.shape[0], df_data_train.shape[0], df_data_test.shape[0], data_directory))
 
 if __name__ == "__main__":
     main()
